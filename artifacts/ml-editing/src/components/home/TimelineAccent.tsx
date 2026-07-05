@@ -14,10 +14,10 @@ export function TimelineAccent() {
     scrollYProgress,
     [0, 0.3, 0.7, 1],
     [
-      'blur(6px) brightness(0.35)',
-      'blur(0px) brightness(0.45)',
-      'blur(0px) brightness(0.45)',
-      'blur(5px) brightness(0.35)',
+      'blur(2px) brightness(0.40)',
+      'blur(0px) brightness(0.50)',
+      'blur(0px) brightness(0.50)',
+      'blur(2px) brightness(0.40)',
     ]
   );
 

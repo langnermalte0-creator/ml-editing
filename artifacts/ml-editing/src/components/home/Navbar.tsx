@@ -1,4 +1,4 @@
-import logoImg from '@assets/ML-Editing_1783250853701.png';
+import logoImg from '@assets/logo_ml_new.png';
 
 export function Navbar() {
   const scrollToPortfolio = (e: React.MouseEvent) => {
@@ -14,8 +14,8 @@ export function Navbar() {
           <img
             src={logoImg}
             alt="ML-Editing Logo"
-            className="h-28 w-auto object-contain"
-            style={{ mixBlendMode: 'screen', filter: 'contrast(1.8) brightness(1.1)' }}
+            className="h-24 w-auto object-contain"
+            style={{ mixBlendMode: 'screen', filter: 'brightness(1.15) contrast(1.1)' }}
           />
         </a>
 

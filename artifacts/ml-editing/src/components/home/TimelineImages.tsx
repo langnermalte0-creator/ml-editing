@@ -52,7 +52,7 @@ export function TimelineImages() {
                 src={img}
                 alt={`Timeline ${i}`}
                 className="w-full h-full object-cover"
-                style={{ filter: 'blur(1.5px) brightness(0.7)' }}
+                style={{ filter: 'blur(0.4px) brightness(0.82)' }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
             </div>

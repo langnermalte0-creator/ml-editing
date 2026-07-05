@@ -1,91 +1,47 @@
 import { motion } from 'framer-motion';
+import imgAe from '@assets/logo_ae.png';
+import imgPr from '@assets/logo_pr.png';
+import imgDaVinci from '@assets/logo_davinci.png';
 
-// ─── Accurate software logo SVGs ───────────────────────────────────────────
+// All three logos have black backgrounds — mix-blend-mode: screen makes black
+// transparent on any dark surface, revealing only the coloured icon.
 
-function PremiereLogo() {
-  return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      <text
-        x="24" y="33"
-        textAnchor="middle"
-        fill="#9999FF"
-        fontFamily="'Arial', sans-serif"
-        fontSize="22"
-        fontWeight="200"
-        letterSpacing="-0.5"
-      >Pr</text>
-    </svg>
-  );
-}
+const LOGO_STYLE: React.CSSProperties = {
+  mixBlendMode: 'screen',
+  filter: 'brightness(1.1)',
+};
 
-function AfterEffectsLogo() {
-  return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      <text
-        x="24" y="33"
-        textAnchor="middle"
-        fill="#9DC4FB"
-        fontFamily="'Arial', sans-serif"
-        fontSize="22"
-        fontWeight="200"
-        letterSpacing="-0.5"
-      >Ae</text>
-    </svg>
-  );
-}
-
-function DaVinciLogo() {
-  // Stylised lens/eye shape — DaVinci Resolve's trademark mark
-  return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      {/* Outer eye / lens shape */}
-      <path
-        d="M 6,24 Q 24,8 42,24 Q 24,40 6,24 Z"
-        fill="none"
-        stroke="#FF8C42"
-        strokeWidth="1.6"
-      />
-      {/* Iris ring */}
-      <circle cx="24" cy="24" r="7.5" fill="none" stroke="#FF8C42" strokeWidth="1.6"/>
-      {/* Pupil */}
-      <circle cx="24" cy="24" r="3.2" fill="#FF8C42"/>
-      {/* Specular glint */}
-      <circle cx="26" cy="22" r="1" fill="#FFD4A8" opacity="0.7"/>
-    </svg>
-  );
-}
-
-// ─── Data ──────────────────────────────────────────────────────────────────
+// ─── Data ───────────────────────────────────────────────────────────────────
 
 const tools = [
   {
     name: 'Premiere Pro',
-    logo: <PremiereLogo />,
-    accent: 'rgba(153,153,255,0.12)',
+    img: imgPr,
+    accent: 'rgba(153,153,255,0.10)',
     border: 'rgba(153,153,255,0.25)',
   },
   {
     name: 'After Effects',
-    logo: <AfterEffectsLogo />,
-    accent: 'rgba(157,196,251,0.12)',
+    img: imgAe,
+    accent: 'rgba(157,196,251,0.10)',
     border: 'rgba(157,196,251,0.25)',
   },
   {
     name: 'DaVinci Resolve',
-    logo: <DaVinciLogo />,
-    accent: 'rgba(255,140,66,0.12)',
-    border: 'rgba(255,140,66,0.25)',
+    img: imgDaVinci,
+    accent: 'rgba(100,200,255,0.08)',
+    border: 'rgba(100,200,255,0.20)',
   },
 ];
 
-// ─── Component ─────────────────────────────────────────────────────────────
+// ─── Component ──────────────────────────────────────────────────────────────
 
 export function Collaborations() {
   return (
     <section className="py-32 bg-card border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* ── Tools ────────────────────────────────────────────────────── */}
+        {/* ── Tools ─────────────────────────────────────────────────────── */}
         <div className="mb-28">
           <motion.p
             className="text-xs font-semibold tracking-widest uppercase text-primary mb-6"
@@ -108,14 +64,20 @@ export function Collaborations() {
             {tools.map((tool, i) => (
               <motion.div
                 key={tool.name}
-                className="flex items-center gap-4 px-6 py-4 rounded-sm border"
+                className="flex items-center gap-4 px-6 py-4 rounded-sm border overflow-hidden"
                 style={{ background: tool.accent, borderColor: tool.border }}
                 initial={{ opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                {tool.logo}
+                {/* Real logo — black bg removed via mix-blend-mode: screen */}
+                <img
+                  src={tool.img}
+                  alt={tool.name}
+                  className="w-12 h-12 object-contain shrink-0"
+                  style={LOGO_STYLE}
+                />
                 <span className="font-display text-white font-medium text-lg">
                   {tool.name}
                 </span>
@@ -124,7 +86,7 @@ export function Collaborations() {
           </div>
         </div>
 
-        {/* ── Collaborations ───────────────────────────────────────────── */}
+        {/* ── Collaborations ────────────────────────────────────────────── */}
         <div>
           <motion.p
             className="text-xs font-semibold tracking-widest uppercase text-primary mb-6"
