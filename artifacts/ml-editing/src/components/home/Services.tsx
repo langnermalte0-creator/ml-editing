@@ -68,11 +68,11 @@ export function Services() {
                 style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(255,176,0,0.06), transparent 70%)' }}
               />
 
-              {/* Light streak — animates on hover via CSS group trick */}
+              {/* Light streak — very subtle, slow, smooth */}
               <div className="absolute inset-0 overflow-hidden rounded-sm pointer-events-none">
                 <div
-                  className="absolute top-0 bottom-0 -left-[60%] w-[55%] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent
-                    translate-x-0 group-hover:translate-x-[400%] transition-transform duration-700 ease-in-out"
+                  className="absolute top-0 bottom-0 -left-full w-full bg-gradient-to-r from-transparent via-white/[0.018] to-transparent
+                    group-hover:translate-x-[250%] transition-transform duration-[1800ms] ease-in-out"
                 />
               </div>
 

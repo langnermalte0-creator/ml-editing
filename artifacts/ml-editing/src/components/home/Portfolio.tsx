@@ -139,31 +139,18 @@ function VideoCard({ project, index }: { project: (typeof projects)[0]; index: n
           }}
         />
 
-        {/* Light sweep on play */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          aria-hidden="true"
-        >
+        {/* Light sweep on play — barely visible, wide soft gradient */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <motion.div
-            className="absolute top-0 bottom-0 w-[45%]"
+            className="absolute top-0 bottom-0 w-[70%]"
             style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.018), transparent)',
             }}
             initial={{ x: '-100%' }}
-            animate={{ x: showSweep ? '320%' : '-100%' }}
-            transition={{ duration: 0.75, ease: 'easeOut' }}
+            animate={{ x: showSweep ? '260%' : '-100%' }}
+            transition={{ duration: 1.4, ease: 'easeInOut' }}
           />
-        </motion.div>
-
-        {/* Letterbox bars (cinematic) — fade out on hover */}
-        <div
-          className="absolute left-0 right-0 top-0 h-[6%] bg-black transition-opacity duration-500 pointer-events-none"
-          style={{ opacity: isPlaying ? 0 : 0.6 }}
-        />
-        <div
-          className="absolute left-0 right-0 bottom-0 h-[6%] bg-black transition-opacity duration-500 pointer-events-none"
-          style={{ opacity: isPlaying ? 0 : 0.6 }}
-        />
+        </div>
 
         {/* Play icon — idle state */}
         <div

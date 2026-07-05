@@ -89,19 +89,16 @@ export function TimelineImages() {
           {ALL_IMGS.map((img, i) => (
             <div
               key={i}
-              className="relative shrink-0 rounded-sm overflow-hidden border border-white/10 group/img"
+              className="relative shrink-0 rounded-sm overflow-hidden border border-white/10"
               style={{ width: 420, height: 220 }}
             >
               <img
                 src={img}
                 alt={`Timeline ${i}`}
-                className="w-full h-full object-cover transition-all duration-500 group-hover/img:brightness-100"
+                className="w-full h-full object-cover"
                 style={{ filter: 'blur(0.3px) brightness(0.80)' }}
               />
-              {/* Warm amber tint on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/15 via-transparent to-transparent opacity-60 group-hover/img:opacity-100 transition-opacity duration-500" />
-              {/* Subtle inner border glow on hover */}
-              <div className="absolute inset-0 rounded-sm ring-1 ring-inset ring-primary/0 group-hover/img:ring-primary/20 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent" />
             </div>
           ))}
         </motion.div>
