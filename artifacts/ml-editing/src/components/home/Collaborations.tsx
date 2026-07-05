@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 function PremiereLogo() {
   return (
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      <rect width="48" height="48" rx="7" fill="#0A0A0A"/>
       <text
         x="24" y="33"
         textAnchor="middle"
@@ -22,7 +21,6 @@ function PremiereLogo() {
 function AfterEffectsLogo() {
   return (
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      <rect width="48" height="48" rx="7" fill="#00005B"/>
       <text
         x="24" y="33"
         textAnchor="middle"
@@ -40,7 +38,6 @@ function DaVinciLogo() {
   // Stylised lens/eye shape — DaVinci Resolve's trademark mark
   return (
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-      <rect width="48" height="48" rx="7" fill="#0A0A0A"/>
       {/* Outer eye / lens shape */}
       <path
         d="M 6,24 Q 24,8 42,24 Q 24,40 6,24 Z"
