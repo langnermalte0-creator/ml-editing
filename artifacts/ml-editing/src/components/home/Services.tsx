@@ -3,24 +3,24 @@ import { motion } from 'framer-motion';
 const services = [
   {
     title: 'Werbefilm-Schnitt',
-    description: 'Wirkungsstarke Schnitte für Ads, Produktvideos und Markenkampagnen.'
+    description: 'Wirkungsstarke Schnitte für Ads, Produktvideos und Markenkampagnen.',
   },
   {
     title: 'Imagefilm-Editing',
-    description: 'Corporate- und Imagefilme präzise geschnitten – nur Editing, kein Filming.'
+    description: 'Corporate- und Imagefilme präzise geschnitten – nur Editing, kein Filming.',
   },
   {
     title: 'Social Media Content',
-    description: 'Kurzvideos, Reels und TikToks, optimiert für maximale Aufmerksamkeit.'
+    description: 'Kurzvideos, Reels und TikToks, optimiert für maximale Aufmerksamkeit.',
   },
   {
     title: 'YouTube-Videos',
-    description: 'Professionell geschnittene YouTube-Inhalte – von Gaming bis Lifestyle, immer auf den Punkt.'
+    description: 'Professionell geschnittene YouTube-Inhalte – von Gaming bis Lifestyle, immer auf den Punkt.',
   },
   {
     title: 'Dokumentation',
-    description: 'Ruhige, atmosphärische Schnitte, die Geschichten und Menschen authentisch erzählen.'
-  }
+    description: 'Ruhige, atmosphärische Schnitte, die Geschichten und Menschen authentisch erzählen.',
+  },
 ];
 
 export function Services() {
@@ -43,7 +43,8 @@ export function Services() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ delay: 0.1 }}
           >
-            Ein Post-Production-Studio, das sich ausschließlich auf die Kunst des Schnitts konzentriert. Kein Filming – nur präzises Editing.
+            Ein Post-Production-Studio, das sich ausschließlich auf die Kunst des Schnitts konzentriert.
+            Kein Filming – nur präzises Editing.
           </motion.p>
         </div>
 
@@ -51,17 +52,44 @@ export function Services() {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="p-10 rounded-sm bg-card border border-card-border hover:border-primary/50 transition-colors group relative overflow-hidden"
+              className="p-10 rounded-sm bg-card border border-card-border group relative overflow-hidden cursor-default"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ borderColor: 'rgba(255,176,0,0.4)' }}
             >
-              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="absolute top-6 right-8 font-display text-5xl font-bold text-white/5 group-hover:text-primary/10 transition-colors pointer-events-none">
+              {/* Amber fill on hover */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(255,176,0,0.06), transparent 70%)' }}
+              />
+
+              {/* Light streak — animates on hover via CSS group trick */}
+              <div className="absolute inset-0 overflow-hidden rounded-sm pointer-events-none">
+                <div
+                  className="absolute top-0 bottom-0 -left-[60%] w-[55%] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent
+                    translate-x-0 group-hover:translate-x-[400%] transition-transform duration-700 ease-in-out"
+                />
+              </div>
+
+              {/* Index number */}
+              <div className="absolute top-6 right-8 font-display text-5xl font-bold text-white/[0.04] group-hover:text-primary/12 transition-colors duration-300 pointer-events-none select-none">
                 0{index + 1}
               </div>
-              <h3 className="relative z-10 font-display text-2xl font-medium text-white mb-4 group-hover:text-primary transition-colors">
+
+              {/* Thin top accent line */}
+              <motion.div
+                className="absolute top-0 left-0 h-[1px] bg-primary"
+                initial={{ width: '0%' }}
+                whileHover={{ width: '100%' }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+              />
+
+              <h3 className="relative z-10 font-display text-2xl font-medium text-white mb-4 group-hover:text-primary transition-colors duration-300">
                 {service.title}
               </h3>
               <p className="relative z-10 text-muted-foreground font-light leading-relaxed">

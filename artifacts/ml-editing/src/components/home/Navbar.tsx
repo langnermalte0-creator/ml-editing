@@ -14,7 +14,7 @@ export function Navbar() {
           <img
             src={logoImg}
             alt="ML-Editing Logo"
-            className="h-24 w-auto object-contain"
+            className="h-36 w-auto object-contain"
             style={{ mixBlendMode: 'screen', filter: 'brightness(1.15) contrast(1.1)' }}
           />
         </a>

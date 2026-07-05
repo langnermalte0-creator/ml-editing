@@ -7,7 +7,7 @@ export function Footer() {
         <img
           src={logoImg}
           alt="ML-Editing"
-          className="h-24 w-auto object-contain"
+          className="h-36 w-auto object-contain"
           style={{ mixBlendMode: 'screen', filter: 'brightness(1.15) contrast(1.1)' }}
         />
         <div className="text-muted-foreground text-sm font-light">

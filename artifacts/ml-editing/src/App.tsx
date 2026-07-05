@@ -6,6 +6,7 @@ import { Route, Switch, Router as WouterRouter } from 'wouter';
 import { Home } from '@/pages/Home';
 import { Navbar } from '@/components/home/Navbar';
 import { Footer } from '@/components/home/Footer';
+import { CursorGlow } from '@/components/home/CursorGlow';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
           <div className="min-h-screen bg-background text-foreground flex flex-col selection:bg-primary/30 selection:text-white">
+            <CursorGlow />
             <Navbar />
             <main className="flex-1">
               <Router />

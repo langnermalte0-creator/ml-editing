@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import airbnbVideo from '@assets/Airbnb-AD_1783250853700.mp4';
+import airbnbVideo    from '@assets/Airbnb-AD_1783250853700.mp4';
 import animation3DVideo from '@assets/3D.Animation.Vertical_1783250853699.mp4';
-import appleVideo from '@assets/Apple.UI-Animation_1783250853700.mp4';
-import moneyVideo from '@assets/Money.Animation_1783250853701.mp4';
+import appleVideo     from '@assets/Apple.UI-Animation_1783250853700.mp4';
+import moneyVideo     from '@assets/Money.Animation_1783250853701.mp4';
 import timeline1Video from '@assets/Timeline_1_1783250853702.mp4';
-import tutorialVideo from '@assets/Tutorial_Animation_1_2_1783250853702.mp4';
-import enimmVideo from '@assets/Enimm.Ad-Final_1783251993888.mp4';
+import tutorialVideo  from '@assets/Tutorial_Animation_1_2_1783250853702.mp4';
+import enimmVideo     from '@assets/Enimm.Ad-Final_1783251993888.mp4';
 
 const projects = [
   {
@@ -71,28 +71,30 @@ function SpeakerOffIcon() {
 }
 
 function VideoCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef  = useRef<HTMLVideoElement>(null);
+  const [isMuted,    setIsMuted]    = useState(true);
+  const [isPlaying,  setIsPlaying]  = useState(false);
+  const [showSweep,  setShowSweep]  = useState(false);
 
   const handleMouseEnter = () => {
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
       videoRef.current.muted = isMuted;
       videoRef.current.play().catch(() => {});
-      setIsPlaying(true);
     }
+    setIsPlaying(true);
+    setShowSweep(true);
+    setTimeout(() => setShowSweep(false), 800);
   };
 
   const handleMouseLeave = () => {
     if (videoRef.current) {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
-      // Reset to muted when leaving so next hover starts clean
       videoRef.current.muted = true;
       setIsMuted(true);
-      setIsPlaying(false);
     }
+    setIsPlaying(false);
   };
 
   const toggleMute = (e: React.MouseEvent) => {
@@ -107,15 +109,22 @@ function VideoCard({ project, index }: { project: (typeof projects)[0]; index: n
   return (
     <motion.div
       className="group cursor-default"
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ delay: (index % 3) * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: (index % 3) * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {/* Video container */}
-      <div className="relative aspect-video rounded-sm overflow-hidden mb-5 bg-[#111] border border-white/5 group-hover:border-primary/30 transition-colors duration-500">
+      <div
+        className="relative aspect-video rounded-sm overflow-hidden mb-5 bg-[#111] border border-white/5 transition-all duration-500"
+        style={{
+          boxShadow: isPlaying
+            ? '0 0 0 1px rgba(255,176,0,0.35), 0 0 50px rgba(255,176,0,0.10), 0 20px 60px rgba(0,0,0,0.5)'
+            : '0 0 0 1px rgba(255,255,255,0.05)',
+        }}
+      >
         <video
           ref={videoRef}
           src={project.video}
@@ -123,20 +132,54 @@ function VideoCard({ project, index }: { project: (typeof projects)[0]; index: n
           loop
           playsInline
           preload="metadata"
-          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500 scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full object-cover transition-all duration-700 ease-out"
+          style={{
+            opacity: isPlaying ? 1 : 0.78,
+            transform: isPlaying ? 'scale(1.04)' : 'scale(1)',
+          }}
         />
 
-        {/* Play icon — shown when not hovering */}
-        <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${isPlaying ? 'opacity-0' : 'opacity-100'}`}>
-          <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-            <div className="w-0 h-0 border-y-[7px] border-y-transparent border-l-[11px] border-l-white ml-1" />
+        {/* Light sweep on play */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          aria-hidden="true"
+        >
+          <motion.div
+            className="absolute top-0 bottom-0 w-[45%]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)',
+            }}
+            initial={{ x: '-100%' }}
+            animate={{ x: showSweep ? '320%' : '-100%' }}
+            transition={{ duration: 0.75, ease: 'easeOut' }}
+          />
+        </motion.div>
+
+        {/* Letterbox bars (cinematic) — fade out on hover */}
+        <div
+          className="absolute left-0 right-0 top-0 h-[6%] bg-black transition-opacity duration-500 pointer-events-none"
+          style={{ opacity: isPlaying ? 0 : 0.6 }}
+        />
+        <div
+          className="absolute left-0 right-0 bottom-0 h-[6%] bg-black transition-opacity duration-500 pointer-events-none"
+          style={{ opacity: isPlaying ? 0 : 0.6 }}
+        />
+
+        {/* Play icon — idle state */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none transition-opacity duration-300"
+          style={{ opacity: isPlaying ? 0 : 1 }}
+        >
+          <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center bg-black/50 backdrop-blur-sm group-hover:border-primary/50 group-hover:bg-black/70 transition-all duration-300">
+            <div className="w-0 h-0 border-y-[7px] border-y-transparent border-l-[12px] border-l-white ml-1" />
           </div>
         </div>
 
-        {/* Mute toggle — shown when playing */}
+        {/* Mute button */}
         <button
           onClick={toggleMute}
-          className={`absolute bottom-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-black/90 hover:border-primary/50 transition-all duration-200 ${isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          className="absolute bottom-3 right-3 z-20 w-9 h-9 rounded-full bg-black/70 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-black/90 hover:border-primary/60 transition-all duration-200"
+          style={{ opacity: isPlaying ? 1 : 0, pointerEvents: isPlaying ? 'auto' : 'none' }}
           title={isMuted ? 'Ton einschalten' : 'Ton ausschalten'}
         >
           <span className={`transition-colors ${isMuted ? 'text-white/50' : 'text-primary'}`}>
@@ -144,18 +187,25 @@ function VideoCard({ project, index }: { project: (typeof projects)[0]; index: n
           </span>
         </button>
 
+        {/* Badge */}
         {project.badge && (
-          <div className="absolute top-3 right-3 px-2.5 py-1 bg-black/70 backdrop-blur-md text-primary text-[10px] font-semibold tracking-widest uppercase border border-primary/30 rounded-sm">
+          <div className="absolute top-3 left-3 px-2.5 py-1 bg-black/70 backdrop-blur-md text-primary text-[10px] font-semibold tracking-widest uppercase border border-primary/30 rounded-sm">
             {project.badge}
           </div>
         )}
       </div>
 
       {/* Info */}
-      <div className="text-[10px] text-muted-foreground font-semibold tracking-widest uppercase mb-2">
+      <div className="text-[10px] text-primary/60 font-semibold tracking-[0.18em] uppercase mb-2 group-hover:text-primary transition-colors duration-300">
         {project.category}
       </div>
-      <h3 className="font-display text-xl font-medium text-white mb-2 group-hover:text-primary transition-colors">
+      <h3
+        className="font-display text-xl font-medium text-white mb-2 transition-all duration-300"
+        style={{
+          textShadow: isPlaying ? '0 0 20px rgba(255,176,0,0.3)' : 'none',
+          color: isPlaying ? 'rgb(255,176,0)' : 'white',
+        }}
+      >
         {project.title}
       </h3>
       <p className="text-muted-foreground text-sm font-light leading-relaxed">
