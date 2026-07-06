@@ -54,7 +54,7 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.9, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE }}
-          className="mb-8 md:mb-10 px-4 md:px-5 py-2 rounded-full border border-primary/25 bg-primary/8 text-primary text-[11px] md:text-xs font-semibold tracking-[0.15em] md:tracking-[0.18em] uppercase"
+          className="mb-8 md:mb-10 px-4 md:px-5 py-2 rounded-full border border-primary/25 bg-primary/8 text-primary text-[11px] md:text-xs font-semibold tracking-[0.15em] md:tracking-[0.18em] uppercase inline-flex items-center gap-2.5 backdrop-blur-sm"
         >
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
           Verfügbar für Projekte
@@ -73,7 +73,7 @@ export function Hero() {
 
         {/* Headline line 2 — italic amber */}
         <div className="overflow-hidden mb-8 md:mb-10">
-          <h1 className="font-display text-[2.6rem] sm:text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] font-normal tracking-tight text-primary italic inline-flex flex-wrap justify-center gap-x-[0.22em]">
+          <h1 className="font-display text-[2.6rem] sm:text-5xl md:text-7xl lg:text-[6.5rem] leading-[1.05] font-normal tracking-tight text-primary italic inline-flex flex-wrap justify-center gap-x-[0.22em] pr-2 md:pr-4">
             {word2.map((w, i) => (
               <motion.span key={w} custom={word1.length + i} variants={wordVariant} initial="hidden" animate="visible" style={{ display: 'inline-block' }}>
                 {w}
