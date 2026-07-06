@@ -1,0 +1,27 @@
+kind = "web"
+previewPath = "/"
+title = "ML-Editing Portfolio"
+version = "1.0.0"
+id = "artifacts/ml-editing"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25121
+
+[services.development]
+run = "pnpm --filter @workspace/ml-editing run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ml-editing", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ml-editing/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25121"
+BASE_PATH = "/"
