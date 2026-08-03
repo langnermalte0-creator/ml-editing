@@ -1,0 +1,9 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "d6hi55pvNVB7qMszPSY-I"
+uri = "file://ml-editing-source.tar.gz"
+type = "unspecified"
+title = "ML-Editing – Kompletter Quellcode"
+description = "Alle Projektdateien ohne node_modules/dist. Zum Öffnen: tar -xzf ml-editing-source.tar.gz"
