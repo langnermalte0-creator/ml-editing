@@ -8,7 +8,10 @@ export function Footer() {
           src={logoImg}
           alt="ML-Editing"
           className="h-36 w-auto object-contain"
-          style={{ mixBlendMode: 'screen', filter: 'brightness(1.15) contrast(1.1)' }}
+          style={{
+            mixBlendMode: 'screen',
+            filter: 'brightness(1.35) contrast(1.05) drop-shadow(0 0 14px rgba(255,176,0,0.28))',
+          }}
         />
         <div className="text-muted-foreground text-sm font-light">
           &copy; {new Date().getFullYear()} ML-Editing. Alle Rechte vorbehalten.

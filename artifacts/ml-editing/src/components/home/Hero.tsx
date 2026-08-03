@@ -18,18 +18,18 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 md:pt-20 overflow-hidden">
 
-      {/* Background glows */}
+      {/* Background glows — evenly spread so no dark rectangles on sides */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[90vw] md:w-[55vw] md:h-[55vw] rounded-full bg-primary/6 blur-[120px]" />
-        <div className="absolute top-[30%] left-[10%] w-[50vw] h-[50vw] md:w-[30vw] md:h-[30vw] rounded-full bg-orange-900/4 blur-[100px]" />
-        <div className="absolute bottom-[20%] right-[5%] w-[40vw] h-[40vw] md:w-[20vw] md:h-[20vw] rounded-full bg-amber-800/3 blur-[80px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110vw] h-[110vw] md:w-[70vw] md:h-[70vw] rounded-full bg-primary/5 blur-[140px]" />
+        <div className="absolute top-[20%] left-[15%] w-[60vw] h-[60vw] md:w-[35vw] md:h-[35vw] rounded-full bg-orange-900/4 blur-[100px]" />
+        <div className="absolute bottom-[15%] right-[10%] w-[50vw] h-[50vw] md:w-[28vw] md:h-[28vw] rounded-full bg-amber-800/3 blur-[90px]" />
       </div>
 
       {/* Film grain */}
       <svg
         aria-hidden="true"
         className="absolute inset-0 w-full h-full z-[1] pointer-events-none select-none"
-        style={{ opacity: 0.045 }}
+        style={{ opacity: 0.04 }}
         xmlns="http://www.w3.org/2000/svg"
       >
         <filter id="grain-hero">
@@ -39,15 +39,22 @@ export function Hero() {
         <rect width="100%" height="100%" filter="url(#grain-hero)" />
       </svg>
 
-      {/* Vignette */}
+      {/* Vignette — softer, no visible edges */}
       <div
         aria-hidden="true"
         className="absolute inset-0 z-[1] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 80% 80% at 50% 50%, transparent 40%, rgba(0,0,0,0.6) 100%)' }}
+        style={{ background: 'radial-gradient(ellipse 100% 90% at 50% 50%, transparent 50%, rgba(0,0,0,0.45) 100%)' }}
+      />
+
+      {/* Bottom fade into next section */}
+      <div
+        aria-hidden="true"
+        className="absolute bottom-0 left-0 right-0 h-32 z-[2] pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent, rgba(8,8,8,0.8))' }}
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-6 text-center flex flex-col items-center w-full">
+      <div className="relative z-10 max-w-5xl mx-auto px-5 md:px-6 text-center flex flex-col items-center w-full py-12 md:py-0">
 
         {/* Badge */}
         <motion.div
@@ -84,7 +91,7 @@ export function Hero() {
 
         {/* Sub-copy */}
         <motion.p
-          className="text-base md:text-xl text-muted-foreground font-light max-w-xs md:max-w-xl mx-auto leading-relaxed mb-10 md:mb-16 px-2 md:px-0"
+          className="text-base md:text-xl text-muted-foreground font-light max-w-xs md:max-w-xl mx-auto leading-relaxed mb-10 md:mb-14 px-2 md:px-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.85, ease: EASE }}
@@ -100,7 +107,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 1.0, ease: EASE }}
         >
           <a
-            href="https://www.instagram.com/moltete/reels/"
+            href="https://www.instagram.com/ml.editing.media?igsh=MXhzbjhjeXo2eG5vdA%3D%3D&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
             className="px-7 py-3.5 bg-primary text-black font-semibold text-sm tracking-widest uppercase hover:bg-white active:scale-95 transition-all rounded-sm w-full sm:w-auto text-center"
@@ -115,23 +122,24 @@ export function Hero() {
             Portfolio ansehen
           </a>
         </motion.div>
-      </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.4 }}
-        transition={{ duration: 1, delay: 1.4 }}
-      >
-        <span className="text-[10px] uppercase tracking-[0.22em] text-white">Scroll</span>
+        {/* Scroll indicator — in flow, below buttons, hidden on mobile */}
         <motion.div
-          className="w-px bg-gradient-to-b from-white/60 to-transparent"
-          initial={{ height: 0 }}
-          animate={{ height: 44 }}
-          transition={{ duration: 0.8, delay: 1.6, ease: EASE }}
-        />
-      </motion.div>
+          className="hidden md:flex flex-col items-center gap-3 mt-16"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.4 }}
+          transition={{ duration: 1, delay: 1.4 }}
+        >
+          <span className="text-[10px] uppercase tracking-[0.22em] text-white">Scroll</span>
+          <motion.div
+            className="w-px bg-gradient-to-b from-white/60 to-transparent"
+            initial={{ height: 0 }}
+            animate={{ height: 44 }}
+            transition={{ duration: 0.8, delay: 1.6, ease: EASE }}
+          />
+        </motion.div>
+
+      </div>
     </section>
   );
 }

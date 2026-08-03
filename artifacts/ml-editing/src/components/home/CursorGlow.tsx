@@ -8,7 +8,7 @@ export function CursorGlow() {
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return;
 
-    const SIZE = 750;
+    const SIZE = 700;
     const onMove = (e: MouseEvent) => {
       mouse.current.x = e.clientX;
       mouse.current.y = e.clientY;
@@ -17,8 +17,8 @@ export function CursorGlow() {
 
     let raf: number;
     const tick = () => {
-      curr.current.x += (mouse.current.x - curr.current.x) * 0.06;
-      curr.current.y += (mouse.current.y - curr.current.y) * 0.06;
+      curr.current.x += (mouse.current.x - curr.current.x) * 0.07;
+      curr.current.y += (mouse.current.y - curr.current.y) * 0.07;
       if (ref.current) {
         ref.current.style.left = `${curr.current.x - SIZE / 2}px`;
         ref.current.style.top  = `${curr.current.y - SIZE / 2}px`;
@@ -41,14 +41,14 @@ export function CursorGlow() {
         position: 'fixed',
         left: -9999,
         top: -9999,
-        width: 750,
-        height: 750,
+        width: 700,
+        height: 700,
         borderRadius: '50%',
         pointerEvents: 'none',
         zIndex: 9998,
         willChange: 'left, top',
         mixBlendMode: 'screen',
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,176,0,0.065) 0%, rgba(255,110,0,0.025) 45%, transparent 70%)',
+        background: 'radial-gradient(circle at 50% 50%, rgba(255,176,0,0.09) 0%, rgba(255,110,0,0.04) 40%, transparent 70%)',
       }}
     />
   );
