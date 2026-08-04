@@ -3,11 +3,9 @@ import { useEffect, useRef } from 'react';
 export function CursorGlow() {
   const layerA = useRef<HTMLDivElement>(null);
   const layerB = useRef<HTMLDivElement>(null);
-  const layerC = useRef<HTMLDivElement>(null);
   const mouse  = useRef({ x: -9999, y: -9999 });
   const posA   = useRef({ x: -9999, y: -9999 });
   const posB   = useRef({ x: -9999, y: -9999 });
-  const posC   = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return;
@@ -18,22 +16,16 @@ export function CursorGlow() {
     };
     window.addEventListener('mousemove', onMove, { passive: true });
 
-    // Sizes — all large so the visible "circle edge" disappears
-    const SA = 1400; // outer: huge ambient nebula
-    const SB = 600;  // mid:   warm core glow
-    const SC = 200;  // inner: faint tight bloom
+    const SA = 1600;
+    const SB = 700;
 
     let raf: number;
     const tick = () => {
-      // Very different lerp speeds → layers drift apart organically
-      posA.current.x += (mouse.current.x - posA.current.x) * 0.028;
-      posA.current.y += (mouse.current.y - posA.current.y) * 0.028;
+      posA.current.x += (mouse.current.x - posA.current.x) * 0.025;
+      posA.current.y += (mouse.current.y - posA.current.y) * 0.025;
 
-      posB.current.x += (mouse.current.x - posB.current.x) * 0.055;
-      posB.current.y += (mouse.current.y - posB.current.y) * 0.055;
-
-      posC.current.x += (mouse.current.x - posC.current.x) * 0.10;
-      posC.current.y += (mouse.current.y - posC.current.y) * 0.10;
+      posB.current.x += (mouse.current.x - posB.current.x) * 0.05;
+      posB.current.y += (mouse.current.y - posB.current.y) * 0.05;
 
       if (layerA.current) {
         layerA.current.style.transform =
@@ -42,10 +34,6 @@ export function CursorGlow() {
       if (layerB.current) {
         layerB.current.style.transform =
           `translate(${posB.current.x - SB / 2}px, ${posB.current.y - SB / 2}px)`;
-      }
-      if (layerC.current) {
-        layerC.current.style.transform =
-          `translate(${posC.current.x - SC / 2}px, ${posC.current.y - SC / 2}px)`;
       }
 
       raf = requestAnimationFrame(tick);
@@ -71,28 +59,22 @@ export function CursorGlow() {
 
   return (
     <>
-      {/* Layer A – giant outer haze, barely visible, very long tail */}
+      {/* Riesige äußere Lichtwolke — beginnt schon bei sehr niedriger Opazität */}
       <div ref={layerA} aria-hidden="true" style={{
         ...base,
-        width: 1400,
-        height: 1400,
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,150,0,0.055) 0%, rgba(255,100,0,0.02) 30%, transparent 60%)',
+        width: SA,
+        height: SA,
+        // Gradient beginnt bei 0.04 und wird bei 45% schon transparent —
+        // kein scharfer Rand, kein sichtbarer Kreis
+        background: 'radial-gradient(circle at 50% 50%, rgba(255,160,0,0.045) 0%, rgba(255,110,0,0.015) 30%, transparent 52%)',
       }} />
 
-      {/* Layer B – medium warm bloom */}
+      {/* Mittlere weiche Bloom-Schicht — niedriger als vorher */}
       <div ref={layerB} aria-hidden="true" style={{
         ...base,
-        width: 600,
-        height: 600,
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,180,0,0.09) 0%, rgba(255,130,0,0.04) 40%, transparent 65%)',
-      }} />
-
-      {/* Layer C – tight subtle hotspot */}
-      <div ref={layerC} aria-hidden="true" style={{
-        ...base,
-        width: 200,
-        height: 200,
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,210,80,0.10) 0%, rgba(255,170,0,0.04) 50%, transparent 75%)',
+        width: SB,
+        height: SB,
+        background: 'radial-gradient(circle at 50% 50%, rgba(255,175,0,0.05) 0%, rgba(255,130,0,0.018) 35%, transparent 55%)',
       }} />
     </>
   );
