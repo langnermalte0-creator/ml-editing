@@ -7,6 +7,10 @@ export function CursorGlow() {
   const posA   = useRef({ x: -9999, y: -9999 });
   const posB   = useRef({ x: -9999, y: -9999 });
 
+  // Verschoben aus useEffect: werden auch im JSX unten gebraucht
+  const SA = 1600;
+  const SB = 700;
+
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return;
 
@@ -16,14 +20,10 @@ export function CursorGlow() {
     };
     window.addEventListener('mousemove', onMove, { passive: true });
 
-    const SA = 1600;
-    const SB = 700;
-
     let raf: number;
     const tick = () => {
       posA.current.x += (mouse.current.x - posA.current.x) * 0.025;
       posA.current.y += (mouse.current.y - posA.current.y) * 0.025;
-
       posB.current.x += (mouse.current.x - posB.current.x) * 0.05;
       posB.current.y += (mouse.current.y - posB.current.y) * 0.05;
 
@@ -68,7 +68,6 @@ export function CursorGlow() {
         // kein scharfer Rand, kein sichtbarer Kreis
         background: 'radial-gradient(circle at 50% 50%, rgba(255,160,0,0.045) 0%, rgba(255,110,0,0.015) 30%, transparent 52%)',
       }} />
-
       {/* Mittlere weiche Bloom-Schicht — niedriger als vorher */}
       <div ref={layerB} aria-hidden="true" style={{
         ...base,
