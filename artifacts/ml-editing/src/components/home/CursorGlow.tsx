@@ -1,81 +1,74 @@
 import { useEffect, useRef } from 'react';
 
-const OUTER_SIZE = 1600;
-const INNER_SIZE = 700;
+const GLOW_WIDTH = 1100;
+const GLOW_HEIGHT = 760;
 
 export function CursorGlow() {
-  const layerA = useRef<HTMLDivElement>(null);
-  const layerB = useRef<HTMLDivElement>(null);
-  const mouse  = useRef({ x: -9999, y: -9999 });
-  const posA   = useRef({ x: -9999, y: -9999 });
-  const posB   = useRef({ x: -9999, y: -9999 });
+  const glow = useRef<HTMLDivElement>(null);
+  const target = useRef({ x: -9999, y: -9999 });
+  const position = useRef({ x: -9999, y: -9999 });
+  const hasPointer = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia('(hover: none)').matches) return;
 
-    const onMove = (e: MouseEvent) => {
-      mouse.current.x = e.clientX;
-      mouse.current.y = e.clientY;
+    const onMove = (event: MouseEvent) => {
+      target.current.x = event.clientX;
+      target.current.y = event.clientY;
+
+      // Start directly under the pointer instead of leaving a visible trail
+      // from outside the viewport on the first mouse movement.
+      if (!hasPointer.current) {
+        position.current.x = event.clientX;
+        position.current.y = event.clientY;
+        hasPointer.current = true;
+      }
     };
+
     window.addEventListener('mousemove', onMove, { passive: true });
 
-    let raf: number;
-    const tick = () => {
-      posA.current.x += (mouse.current.x - posA.current.x) * 0.025;
-      posA.current.y += (mouse.current.y - posA.current.y) * 0.025;
+    let frame = 0;
+    const animate = () => {
+      // Close enough to feel attached to the pointer, while still easing
+      // smoothly instead of snapping on every mouse event.
+      position.current.x += (target.current.x - position.current.x) * 0.11;
+      position.current.y += (target.current.y - position.current.y) * 0.11;
 
-      posB.current.x += (mouse.current.x - posB.current.x) * 0.05;
-      posB.current.y += (mouse.current.y - posB.current.y) * 0.05;
-
-      if (layerA.current) {
-        layerA.current.style.transform =
-          `translate(${posA.current.x - OUTER_SIZE / 2}px, ${posA.current.y - OUTER_SIZE / 2}px)`;
-      }
-      if (layerB.current) {
-        layerB.current.style.transform =
-          `translate(${posB.current.x - INNER_SIZE / 2}px, ${posB.current.y - INNER_SIZE / 2}px)`;
+      if (glow.current) {
+        glow.current.style.transform =
+          `translate(${position.current.x - GLOW_WIDTH / 2}px, ${position.current.y - GLOW_HEIGHT / 2}px)`;
       }
 
-      raf = requestAnimationFrame(tick);
+      frame = requestAnimationFrame(animate);
     };
-    raf = requestAnimationFrame(tick);
+
+    frame = requestAnimationFrame(animate);
 
     return () => {
-      cancelAnimationFrame(raf);
+      cancelAnimationFrame(frame);
       window.removeEventListener('mousemove', onMove);
     };
   }, []);
 
-  const base: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    borderRadius: '50%',
-    pointerEvents: 'none',
-    zIndex: 9998,
-    willChange: 'transform',
-    mixBlendMode: 'screen',
-  };
-
   return (
-    <>
-      {/* Riesige äußere Lichtwolke — beginnt schon bei sehr niedriger Opazität */}
-      <div ref={layerA} aria-hidden="true" style={{
-        ...base,
-        width: OUTER_SIZE,
-        height: OUTER_SIZE,
-        // Gradient beginnt bei 0.04 und wird bei 45% schon transparent —
-        // kein scharfer Rand, kein sichtbarer Kreis
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,160,0,0.045) 0%, rgba(255,110,0,0.015) 30%, transparent 52%)',
-      }} />
-
-      {/* Mittlere weiche Bloom-Schicht — niedriger als vorher */}
-      <div ref={layerB} aria-hidden="true" style={{
-        ...base,
-        width: INNER_SIZE,
-        height: INNER_SIZE,
-        background: 'radial-gradient(circle at 50% 50%, rgba(255,175,0,0.05) 0%, rgba(255,130,0,0.018) 35%, transparent 55%)',
-      }} />
-    </>
+    <div
+      ref={glow}
+      aria-hidden="true"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: GLOW_WIDTH,
+        height: GLOW_HEIGHT,
+        borderRadius: '50%',
+        pointerEvents: 'none',
+        zIndex: 9998,
+        willChange: 'transform',
+        mixBlendMode: 'screen',
+        filter: 'blur(38px)',
+        background:
+          'radial-gradient(ellipse at center, rgba(255, 170, 0, 0.045) 0%, rgba(255, 115, 0, 0.018) 32%, transparent 62%)',
+      }}
+    />
   );
 }
