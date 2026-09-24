@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import imgAe from '@assets/logo_ae.png';
 import imgPr from '@assets/logo_pr.png';
 import imgDaVinci from '@assets/logo_davinci.png';
+import enimmtvAvatar from '@assets/enimmtv-avatar.jpg';
+import lezgolezgoAvatar from '@assets/lezgolezgo-avatar.jpg';
 
 // All three logos have black backgrounds — mix-blend-mode: screen makes black
 // transparent on any dark surface, revealing only the coloured icon.
@@ -31,6 +33,21 @@ const tools = [
     img: imgDaVinci,
     accent: 'rgba(100,200,255,0.08)',
     border: 'rgba(100,200,255,0.20)',
+  },
+];
+
+const collaborations = [
+  {
+    handle: '@Enimmtv',
+    href: 'https://www.youtube.com/@Enimmtv',
+    avatar: enimmtvAvatar,
+    detail: 'YouTube-Kanal · 7 Projekte umgesetzt',
+  },
+  {
+    handle: '@lezgolezgo',
+    href: 'https://www.youtube.com/@lezgolezgo',
+    avatar: lezgolezgoAvatar,
+    detail: 'YouTube-Kanal · Zusammenarbeit',
   },
 ];
 
@@ -105,39 +122,45 @@ export function Collaborations() {
             Kanäle, mit denen ich gearbeitet habe.
           </motion.h2>
 
-          <motion.a
-            href="https://www.youtube.com/@Enimmtv"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-6 p-8 rounded-sm bg-background border border-card-border hover:border-primary/50 transition-all"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            {/* YouTube icon */}
-            <div className="w-14 h-14 rounded-full bg-[#FF0000]/10 border border-[#FF0000]/30 flex items-center justify-center shrink-0 group-hover:bg-[#FF0000]/20 transition-colors">
-              <svg viewBox="0 0 24 24" className="w-7 h-7 fill-[#FF0000]">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {collaborations.map((collaboration, i) => (
+              <motion.a
+                key={collaboration.handle}
+                href={collaboration.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-5 p-6 md:p-8 rounded-sm bg-background border border-card-border hover:border-primary/50 transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <img
+                  src={collaboration.avatar}
+                  alt={`${collaboration.handle} Profilbild`}
+                  className="w-14 h-14 rounded-full object-cover shrink-0 border border-white/15 group-hover:border-primary/60 transition-colors"
+                />
 
-            <div className="flex-1">
-              <div className="font-display text-2xl font-semibold text-white group-hover:text-primary transition-colors mb-1">
-                @Enimmtv
-              </div>
-              <div className="text-muted-foreground text-sm font-light">
-                YouTube-Kanal · 7 Projekte umgesetzt
-              </div>
-            </div>
+                <div className="flex-1 min-w-0">
+                  <div className="font-display text-2xl font-semibold text-white group-hover:text-primary transition-colors mb-1">
+                    {collaboration.handle}
+                  </div>
+                  <div className="text-muted-foreground text-sm font-light">
+                    {collaboration.detail}
+                  </div>
+                </div>
 
-            <svg
-              className="w-5 h-5 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-            </svg>
-          </motion.a>
+                <svg
+                  className="w-5 h-5 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
+              </motion.a>
+            ))}
+          </div>
         </div>
 
       </div>
