@@ -43,6 +43,11 @@ function VideoCard({ project, index }: { project: (typeof projects)[0]; index: n
 
   useEffect(() => {
     isTouch.current = window.matchMedia('(hover: none)').matches;
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.defaultMuted = true;
+      videoRef.current.pause();
+    }
   }, []);
 
   const startPlay = useCallback(() => {
