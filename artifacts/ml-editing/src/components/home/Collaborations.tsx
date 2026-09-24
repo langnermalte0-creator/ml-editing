@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import imgAe from '@assets/logo_ae.png';
 import imgPr from '@assets/logo_pr.png';
 import imgDaVinci from '@assets/logo_davinci.png';
-import enimmtvAvatar from '@assets/enimmtv-avatar.jpg';
-import lezgolezgoAvatar from '@assets/lezgolezgo-avatar.jpg';
+import enimmtvAvatar from '@assets/logo-mascot_1790272822957.jpg';
+import lezgolezgoAvatar from '@assets/channels4_profile_1790272832874.jpg';
 
 // All three logos have black backgrounds — mix-blend-mode: screen makes black
 // transparent on any dark surface, revealing only the coloured icon.
@@ -38,16 +38,18 @@ const tools = [
 
 const collaborations = [
   {
+    name: 'Enimmtv',
     handle: '@Enimmtv',
     href: 'https://www.youtube.com/@Enimmtv',
     avatar: enimmtvAvatar,
     detail: 'YouTube-Kanal · 7 Projekte umgesetzt',
   },
   {
+    name: 'Lezan',
     handle: '@lezgolezgo',
     href: 'https://www.youtube.com/@lezgolezgo',
     avatar: lezgolezgoAvatar,
-    detail: 'YouTube-Kanal · Zusammenarbeit',
+    detail: 'YouTube-Kanal · @lezgolezgo',
   },
 ];
 
@@ -137,13 +139,13 @@ export function Collaborations() {
               >
                 <img
                   src={collaboration.avatar}
-                  alt={`${collaboration.handle} Profilbild`}
+                  alt={`${collaboration.name} Profilbild`}
                   className="w-14 h-14 rounded-full object-cover shrink-0 border border-white/15 group-hover:border-primary/60 transition-colors"
                 />
 
                 <div className="flex-1 min-w-0">
                   <div className="font-display text-2xl font-semibold text-white group-hover:text-primary transition-colors mb-1">
-                    {collaboration.handle}
+                    {collaboration.name}
                   </div>
                   <div className="text-muted-foreground text-sm font-light">
                     {collaboration.detail}
