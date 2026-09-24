@@ -89,9 +89,6 @@ export function TimelineAccent() {
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-3">
-              Direkt aus Premiere Pro
-            </p>
             <p className="font-display text-2xl md:text-3xl font-medium text-white/90 max-w-sm leading-snug">
               Frame-perfekter Schnitt.<br />
               <span className="text-primary">Kein Kompromiss.</span>
