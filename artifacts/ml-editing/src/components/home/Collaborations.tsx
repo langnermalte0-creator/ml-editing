@@ -42,14 +42,14 @@ const collaborations = [
     handle: '@Enimmtv',
     href: 'https://www.youtube.com/@Enimmtv',
     avatar: enimmtvAvatar,
-    detail: 'YouTube-Kanal · 7 Projekte umgesetzt',
+    detail: 'YouTube-Kanal · 3,5 Tsd. Abonnenten',
   },
   {
     name: 'Lezan',
     handle: '@lezgolezgo',
     href: 'https://www.youtube.com/@lezgolezgo',
     avatar: lezgolezgoAvatar,
-    detail: 'YouTube-Kanal · @lezgolezgo',
+    detail: 'YouTube-Kanal · 16,4 Tsd. Abonnenten',
   },
 ];
 
